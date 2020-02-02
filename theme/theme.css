@@ -1,0 +1,8 @@
+
+/* @theme gitops */
+
+@import 'default';
+
+section {
+  background: #fc9;
+}
