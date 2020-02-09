@@ -9,3 +9,4 @@ manager_image_patch.yaml-e
 .envrc
 sshkey
 sshkey.pub
+kubeconfig
