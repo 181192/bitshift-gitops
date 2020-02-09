@@ -3,7 +3,7 @@ marp: true
 theme: gitops
 ---
 
-# GitOps -
+# GitOps - Cluster API, Cloud Resources, Canary Releases and Application configuration
 
 ---
 
@@ -139,6 +139,23 @@ metadata:
     fluxcd.io/automated: "true"
     fluxcd.io/tag.chart-image: semver:~3.0
 ```
+
+---
+
+# Flux - Progressive Delivery
+
+For advanced deployments patterns like Canary releases, A/B testing and Blue/Green deployments, Flux can be used together with Flagger and a service mesh of your choice.
+
+![flagger-gitops](./images/flagger-gitops.png)
+<!--
+Flux can apply and manage the state of the cluster.
+But how can we do rollback if a release failes?
+- Flux applies resources to Kubernetes controller, if the controller accept the resource Flux will think everything is OK.
+- With Helm there is some sort of testing with Helm Test. Helm also watches for deployments starting (aka health/ready points). Rooling upgrade does not take down the working application before healthz/Readys are validated.
+
+Flagger can verify release according to business metrics. Start exposing to X% of users, Flux does not know, Flagger running the show.
+-->
+
 ---
 
 # Canary releases
@@ -174,4 +191,245 @@ spec:
         url: http://load-tester.prod/
         metadata:
           cmd: "hey -z 2m -q 10 -c 2 http://podinfo:9898/"
+```
+
+---
+
+# Cluster API - What is it?
+
+> The Cluster API is a Kubernetes project to bring declarative, Kubernetes-style APIs to cluster creation, configuration, and management. It provides optional, additive functionality on top of core Kubernetes to manage the lifecycle of a Kubernetes cluster.
+
+---
+
+# Cluster API - Goals
+
+- To manage the lifecycle (create, scale, upgrade, destroy) of Kubernetes-conformant clusters using a declarative API.
+- To work in different environments, both on-premises and in the cloud.
+- To define common operations, provide a default implementation, and provide the ability to swap out implementations for alternative ones.
+- To reuse and integrate existing ecosystem components rather than duplicating their functionality (e.g. node-problem-detector, cluster autoscaler, SIG-Multi-cluster).
+- To provide a transition path for Kubernetes lifecycle products to adopt Cluster API incrementally. Specifically, existing cluster lifecycle management tools should be able to adopt Cluster API in a staged manner, over the course of multiple releases, or even adopting a subset of Cluster API.
+
+
+---
+
+# Cluster API - Define a AKS cluster
+
+```yaml
+apiVersion: cluster.x-k8s.io/v1alpha3
+kind: Cluster
+metadata:
+  name: ${CLUSTER_NAME}
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks: ["192.168.0.0/16"]
+  infrastructureRef:
+    apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+    kind: AzureCluster
+    name: ${CLUSTER_NAME}
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+kind: AzureCluster
+metadata:
+  name: ${CLUSTER_NAME}
+spec:
+  resourceGroup: "${AZURE_RESOURCE_GROUP}"
+  location: "${AZURE_LOCATION}"
+  networkSpec:
+    vnet:
+      name: "${VNET_NAME}"
+```
+
+---
+# Cluster API - Create controlle plane
+
+```yaml
+apiVersion: cluster.x-k8s.io/v1alpha3
+kind: Machine
+metadata:
+  name: ${CLUSTER_NAME}-controlplane-0
+  labels:
+    cluster.x-k8s.io/control-plane: "true"
+spec:
+  version: ${KUBERNETES_VERSION}
+  clusterName: ${CLUSTER_NAME}
+  bootstrap:
+    configRef:
+      apiVersion: bootstrap.cluster.x-k8s.io/v1alpha3
+      kind: KubeadmConfig
+      name: ${CLUSTER_NAME}-controlplane-0
+  infrastructureRef:
+    apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+    kind: AzureMachine
+    name: ${CLUSTER_NAME}-controlplane-0
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+kind: AzureMachine
+metadata:
+  name: ${CLUSTER_NAME}-controlplane-0
+spec:
+  location: ${AZURE_LOCATION}
+  vmSize: ${CONTROL_PLANE_MACHINE_TYPE}
+  osDisk:
+    osType: "Linux"
+    diskSizeGB: 30
+    managedDisk:
+      storageAccountType: "Premium_LRS"
+  sshPublicKey: ${SSH_PUBLIC_KEY}
+```
+
+---
+
+# Cluster API - Controll plane boostrap cluster config
+```yaml
+apiVersion: bootstrap.cluster.x-k8s.io/v1alpha3
+kind: KubeadmConfig
+metadata:
+  name: ${CLUSTER_NAME}-controlplane-0
+spec:
+  initConfiguration:
+    nodeRegistration:
+      name: '{{ ds.meta_data["local_hostname"] }}'
+      kubeletExtraArgs:
+        cloud-provider: azure
+        cloud-config: /etc/kubernetes/azure.json
+  clusterConfiguration:
+    apiServer:
+      timeoutForControlPlane: 20m
+      extraArgs:
+        cloud-provider: azure
+        cloud-config: /etc/kubernetes/azure.json
+      extraVolumes:
+        - hostPath: /etc/kubernetes/azure.json
+          mountPath: /etc/kubernetes/azure.json
+          name: cloud-config
+          readOnly: true
+    controllerManager:
+      extraArgs:
+        cloud-provider: azure
+        cloud-config: /etc/kubernetes/azure.json
+        allocate-node-cidrs: "false"
+      extraVolumes:
+        - hostPath: /etc/kubernetes/azure.json
+          mountPath: /etc/kubernetes/azure.json
+          name: cloud-config
+          readOnly: true
+  files:
+    - path: /etc/kubernetes/azure.json
+      owner: "root:root"
+      permissions: "0644"
+      content: |
+        {
+          "cloud": "AzurePublicCloud",
+          "tenantId": "${AZURE_TENANT_ID}",
+          "subscriptionId": "${AZURE_SUBSCRIPTION_ID}",
+          "aadClientId": "${AZURE_CLIENT_ID}",
+          "aadClientSecret": "${AZURE_CLIENT_SECRET}",
+          "resourceGroup": "${AZURE_RESOURCE_GROUP}",
+          "securityGroupName": "${CLUSTER_NAME}-controlplane-nsg",
+          "location": "${AZURE_LOCATION}",
+          "vmType": "standard",
+          "vnetName": "${CLUSTER_NAME}",
+          "vnetResourceGroup": "${CLUSTER_NAME}",
+          "subnetName": "${CLUSTER_NAME}-controlplane-subnet",
+          "routeTableName": "${CLUSTER_NAME}-node-routetable",
+          "userAssignedID": "${CLUSTER_NAME}",
+          "loadBalancerSku": "standard",
+          "maximumLoadBalancerRuleCount": 250,
+          "useManagedIdentityExtension": false,
+          "useInstanceMetadata": true
+        }
+```
+
+---
+
+# Cluster API - Create the worker nodes
+
+```yaml
+apiVersion: cluster.x-k8s.io/v1alpha3
+kind: MachineDeployment
+metadata:
+  name: ${CLUSTER_NAME}-md-0
+  labels:
+    nodepool: nodepool-0
+spec:
+  replicas: 2
+  clusterName: ${CLUSTER_NAME}
+  selector:
+    matchLabels:
+      nodepool: nodepool-0
+  template:
+    metadata:
+      labels:
+        nodepool: nodepool-0
+    spec:
+      version: ${KUBERNETES_VERSION}
+      clusterName: ${CLUSTER_NAME}
+      bootstrap:
+        configRef:
+          name: ${CLUSTER_NAME}-md-0
+          apiVersion: bootstrap.cluster.x-k8s.io/v1alpha3
+          kind: KubeadmConfigTemplate
+      infrastructureRef:
+        name: ${CLUSTER_NAME}-md-0
+        apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+        kind: AzureMachineTemplate
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+kind: AzureMachineTemplate
+metadata:
+  name: ${CLUSTER_NAME}-md-0
+spec:
+  template:
+    spec:
+      location: ${AZURE_LOCATION}
+      vmSize: ${NODE_MACHINE_TYPE}
+      osDisk:
+        osType: "Linux"
+        diskSizeGB: 30
+        managedDisk:
+          storageAccountType: "Premium_LRS"
+      sshPublicKey: ${SSH_PUBLIC_KEY}
+```
+---
+
+# Cluster API - Boostrap
+```yaml
+apiVersion: bootstrap.cluster.x-k8s.io/v1alpha3
+kind: KubeadmConfigTemplate
+metadata:
+  name: ${CLUSTER_NAME}-md-0
+spec:
+  template:
+    spec:
+      joinConfiguration:
+        nodeRegistration:
+          name: '{{ ds.meta_data["local_hostname"] }}'
+          kubeletExtraArgs:
+            cloud-provider: azure
+            cloud-config: /etc/kubernetes/azure.json
+      files:
+        - path: /etc/kubernetes/azure.json
+          owner: "root:root"
+          permissions: "0644"
+          content: |
+            {
+              "cloud": "AzurePublicCloud",
+              "tenantId": "${AZURE_TENANT_ID}",
+              "subscriptionId": "${AZURE_SUBSCRIPTION_ID}",
+              "aadClientId": "${AZURE_CLIENT_ID}",
+              "aadClientSecret": "${AZURE_CLIENT_SECRET}",
+              "resourceGroup": "${CLUSTER_NAME}",
+              "securityGroupName": "${CLUSTER_NAME}-node-nsg",
+              "location": "${AZURE_LOCATION}",
+              "vmType": "standard",
+              "vnetName": "${CLUSTER_NAME}",
+              "vnetResourceGroup": "${CLUSTER_NAME}",
+              "subnetName": "${CLUSTER_NAME}-node-subnet",
+              "routeTableName": "${CLUSTER_NAME}-node-routetable",
+              "loadBalancerSku": "standard",
+              "maximumLoadBalancerRuleCount": 250,
+              "useManagedIdentityExtension": false,
+              "useInstanceMetadata": true
+            }
 ```
