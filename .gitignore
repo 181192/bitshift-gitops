@@ -1,0 +1,11 @@
+# Ignore output manifests
+bootstrap/_out
+bootstrap/cluster/provider-components-base.yaml
+bootstrap/cluster/provider-components/provider-components-*.yaml
+config/samples
+manager_image_patch.yaml-e
+
+.env
+.envrc
+sshkey
+sshkey.pub
