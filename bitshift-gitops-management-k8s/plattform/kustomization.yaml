@@ -1,7 +1,7 @@
 resources:
   - ../../manifests/nginx-ingress/overlays/linkerd
   - ../../manifests/cert-manager/overlays/linkerd
-  - ../../manifests/sealed-secrets/overlays/linkerd
+  - ../../manifests/sealed-secrets/base
   - monitoring-namespace.yaml
 
 transformers:
