@@ -1,0 +1,24 @@
+image:
+  repository: docker.io/fluxcd/helm-operator
+  tag: 1.0.0-rc8
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+updateChartDeps: true
+
+helm:
+  versions: v3
+
+prometheus:
+  enabled: true
+
+clusterRole:
+  create: true
+
+git:
+  ssh:
+    secretName: flux-git-deploy
