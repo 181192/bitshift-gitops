@@ -1,0 +1,9 @@
+resources:
+  - ../../manifests/nginx-ingress/overlays/linkerd
+  - ../../manifests/cert-manager/overlays/linkerd
+  - ../../manifests/sealed-secrets/overlays/linkerd
+  - monitoring-namespace.yaml
+
+transformers:
+  - common-annotations.yaml
+  - flux-annotations.yaml

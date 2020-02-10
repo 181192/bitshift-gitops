@@ -1,0 +1,11 @@
+apiVersion: builtin
+kind: AnnotationsTransformer
+metadata:
+  name: common-annotations
+annotations:
+  linkerd.io/inject: enabled
+  sail.stacc.dev/fluentd-configmap: fluentd-config
+fieldSpecs:
+- path: metadata/annotations
+  kind: Namespace
+  create: true

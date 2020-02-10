@@ -1,0 +1,11 @@
+apiVersion: builtin
+kind: AnnotationsTransformer
+metadata:
+  name: flux-annotations
+annotations:
+  fluxcd.io/automated: "false"
+fieldSpecs:
+- path: metadata/annotations
+  kind: HelmRelease
+  apiVersion: helm.fluxcd.io/v1
+  create: true
