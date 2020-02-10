@@ -1,0 +1,13 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: nginx-ingress
+  namespace: nginx-ingress
+spec:
+  values:
+    controller:
+      podAnnotations:
+        linkerd.io/inject: enabled
+    defaultBackend:
+      podAnnotations:
+        linkerd.io/inject: enabled

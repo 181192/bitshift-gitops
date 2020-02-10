@@ -1,0 +1,20 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: flagger
+  namespace: linkerd
+spec:
+  releaseName: flagger
+  chart:
+    repository: https://flagger.app
+    name: flagger
+    version: "0.23.0"
+  values:
+    image:
+      repository: weaveworks/flagger
+      tag: 0.23.0
+      pullPolicy: IfNotPresent
+    crd:
+      create: true
+    metricsServer: http://linkerd-prometheus:9090
+    meshProvider: linkerd

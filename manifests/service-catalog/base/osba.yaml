@@ -1,0 +1,11 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: osba
+  namespace: service-catalog
+spec:
+  releaseName: osba
+  chart:
+    repository: https://kubernetescharts.blob.core.windows.net/azure
+    name: open-service-broker-azure
+    version: "1.8.4"

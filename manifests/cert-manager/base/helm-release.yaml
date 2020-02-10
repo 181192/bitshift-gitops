@@ -1,0 +1,18 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: cert-manager
+  namespace: kube-system
+spec:
+  releaseName: cert-manager
+  chart:
+    repository: https://charts.jetstack.io/
+    name: cert-manager
+    version: v0.10.1
+  values:
+    image:
+      repository: quay.io/jetstack/cert-manager-controller
+      tag: v0.10.1
+      pullPolicy: IfNotPresent
+    crd:
+      create: true

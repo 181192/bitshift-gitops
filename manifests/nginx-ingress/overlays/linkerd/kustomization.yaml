@@ -1,0 +1,6 @@
+resources:
+  - ../../base
+
+patches:
+  - patch-helm-release.yaml
+  - patch-namespace.yaml

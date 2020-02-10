@@ -1,0 +1,24 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: svc-cat
+  namespace: service-catalog
+spec:
+  releaseName: svc-cat
+  chart:
+    repository: https://svc-catalog-charts.storage.googleapis.com
+    name: catalog
+    version: 0.3.0-beta.2
+  values:
+    apiserver:
+      verbosity: 2
+      storage:
+        etcd:
+          persistence:
+            enabled: true
+      healthcheck:
+        enabled: false
+    controllerManager:
+      verbosity: 2
+      healthcheck:
+        enabled: false

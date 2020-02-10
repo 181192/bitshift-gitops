@@ -1,0 +1,11 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: linkerd
+  namespace: linkerd-system
+spec:
+  releaseName: linkerd
+  chart:
+    repository: https://helm.linkerd.io/stable
+    name: linkerd2
+    version: v2.6.1
