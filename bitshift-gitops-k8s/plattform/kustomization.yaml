@@ -1,0 +1,16 @@
+resources:
+  - ../../manifests/nginx-ingress/overlays/linkerd
+  - ../../manifests/cert-manager/overlays/linkerd
+  - ../../manifests/sealed-secrets/base
+  - ../../manifests/service-catalog/base
+  - ../../manifests/linkerd/base
+  - ../../manifests/flagger/base
+  - addons.yaml
+  - monitoring-namespace.yaml
+
+transformers:
+  - common-annotations.yaml
+  - flux-annotations.yaml
+
+patches:
+  - patch-osba.yaml

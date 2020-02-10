@@ -1,0 +1,12 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: osba
+  namespace: service-catalog
+spec:
+  values:
+    azure:
+      subscriptionId: $AZURE_SUBSCRIPTION_ID
+      tenantId: $AZURE_TENANT_ID
+      clientId: $AZURE_CLIENT_ID
+      clientSecret: $AZURE_CLIENT_SECRET

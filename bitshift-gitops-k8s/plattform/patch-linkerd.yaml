@@ -1,0 +1,44 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: linkerd
+  namespace: linkerd-system
+spec:
+  values:
+    global:
+      identityTrustAnchorsPEM: |
+        -----BEGIN CERTIFICATE-----
+        MIIBwjCCAWegAwIBAgIRAKyqo+2Eyecq4bilUSEizMYwCgYIKoZIzj0EAwIwKTEn
+        MCUGA1UEAxMeaWRlbnRpdHkubGlua2VyZC5jbHVzdGVyLmxvY2FsMB4XDTIwMDIx
+        MDE4MzY0MVoXDTMwMDIwNzE4MzY0MVowKTEnMCUGA1UEAxMeaWRlbnRpdHkubGlu
+        a2VyZC5jbHVzdGVyLmxvY2FsMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAExKAZ
+        I9MCFPnApH0XCynA5l1qGOxfgVfpMD2efI60IHwAd1h24YXZmqRPGJbWgijrl46+
+        oCCp1M8MYdhZLPNKWaNwMG4wDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYB
+        Af8CAQEwHQYDVR0OBBYEFEkK0S7X/x+BZJ8MrTOJweYsAlw+MCkGA1UdEQQiMCCC
+        HmlkZW50aXR5LmxpbmtlcmQuY2x1c3Rlci5sb2NhbDAKBggqhkjOPQQDAgNJADBG
+        AiEAh0NtXhCAWaioAQ3wLi4Y+JBaDSi6A4RczpO/Rux05nQCIQDI/ZI0O1eTtf6i
+        Fs01Ry5sVc35Af041Q5ib8D/nGb01w==
+        -----END CERTIFICATE-----
+    identity:
+      issuer:
+        tls:
+          crtPEM: |
+            -----BEGIN CERTIFICATE-----
+            MIIBwTCCAWegAwIBAgIRANcFEuFR1y/zNJPlUZBDZZ8wCgYIKoZIzj0EAwIwKTEn
+            MCUGA1UEAxMeaWRlbnRpdHkubGlua2VyZC5jbHVzdGVyLmxvY2FsMB4XDTIwMDIx
+            MDE4MzY0NloXDTIxMDIwOTE4MzY0NlowKTEnMCUGA1UEAxMeaWRlbnRpdHkubGlu
+            a2VyZC5jbHVzdGVyLmxvY2FsMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEBMOp
+            2iFHY8rhNcSTij76fW3ZdwspU48/tCvS+wCGLerNcDC7590q4xeE3cq65poIHxx9
+            /ZhAPcSEYp7ZUlqHcqNwMG4wDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYB
+            Af8CAQAwHQYDVR0OBBYEFCGq7NFMK9Mgt3006Ng5vUsIG3hmMCkGA1UdEQQiMCCC
+            HmlkZW50aXR5LmxpbmtlcmQuY2x1c3Rlci5sb2NhbDAKBggqhkjOPQQDAgNIADBF
+            AiEAjlzVc260Lgr0pOEiChoax/VZj4+60HhOXQcjLCkbQEYCIGBaspIVoEOzvnCr
+            DGnYEKBqpPUxpgT5Rb8lBaVdqw9F
+            -----END CERTIFICATE-----
+          keyPEM: |
+            -----BEGIN EC PRIVATE KEY-----
+            MHcCAQEEIEbLLeY4BHV8LeJ5XelTLXDJk/xNGygmXsjUjtS+VR/doAoGCCqGSM49
+            AwEHoUQDQgAEBMOp2iFHY8rhNcSTij76fW3ZdwspU48/tCvS+wCGLerNcDC7590q
+            4xeE3cq65poIHxx9/ZhAPcSEYp7ZUlqHcg==
+            -----END EC PRIVATE KEY-----
+        crtExpiry: "2021-02-09T19:38:18Z"
