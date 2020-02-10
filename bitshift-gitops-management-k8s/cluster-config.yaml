@@ -1,0 +1,6 @@
+kind: ClusterConfig
+apiVersion: opscli.io/v1alpha1
+metadata:
+  name: bitshift-gitops-management-k8s
+spec:
+  location: westeurope
