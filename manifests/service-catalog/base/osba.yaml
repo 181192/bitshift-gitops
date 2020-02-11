@@ -9,3 +9,10 @@ spec:
     repository: https://kubernetescharts.blob.core.windows.net/azure
     name: open-service-broker-azure
     version: "1.8.4"
+  values:
+    redis:
+      persistence:
+        enabled: true
+        storageClass: azurefile
+        accessMode: ReadWriteOnce
+        size: 8Gi
