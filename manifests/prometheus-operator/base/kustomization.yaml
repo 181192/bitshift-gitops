@@ -1,0 +1,8 @@
+resources:
+  - alertmanagers-crd.yaml
+  - kustomization.yaml
+  - podmonitors-crd.yaml
+  - prometheuses-crd.yaml
+  - prometheusrules-crd.yaml
+  - servicemonitors-crd.yaml
+  - thanosrulers-crd.yaml

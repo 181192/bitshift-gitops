@@ -5,6 +5,7 @@ resources:
   - ../../manifests/service-catalog/base
   - ../../manifests/linkerd/base
   - ../../manifests/flagger/base
+  - ../../manifests/prometheus-operator/base
   - addons.yaml
   - monitoring-namespace.yaml
 
