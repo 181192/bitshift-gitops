@@ -9,3 +9,7 @@ spec:
     repository: https://helm.linkerd.io/stable
     name: linkerd2
     version: "2.7.0"
+  values:
+    installNamespace: false
+    global:
+      namespace: linkerd-system
