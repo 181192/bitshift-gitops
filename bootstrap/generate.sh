@@ -45,7 +45,7 @@ COMPONENTS_CLUSTER_API_GENERATED_FILE=${SOURCE_DIR}/cluster/provider-components/
 COMPONENTS_KUBEADM_GENERATED_FILE=${SOURCE_DIR}/cluster/provider-components/provider-components-kubeadm.yaml
 COMPONENTS_AZURE_GENERATED_FILE=${SOURCE_DIR}/cluster/provider-components/provider-components-azure.yaml
 
-PROVIDER_COMPONENTS_GENERATED_FILE=${OUTPUT_DIR}/provider-components.yaml
+PROVIDER_COMPONENTS_GENERATED_FILE=${OUTPUT_DIR}/../provider-components.yaml
 CLUSTER_GENERATED_FILE=${OUTPUT_DIR}/cluster.yaml
 CONTROLPLANE_GENERATED_FILE=${OUTPUT_DIR}/controlplane.yaml
 MACHINEDEPLOYMENT_GENERATED_FILE=${OUTPUT_DIR}/machinedeployment.yaml
