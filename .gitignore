@@ -10,3 +10,4 @@ manager_image_patch.yaml-e
 sshkey
 sshkey.pub
 kubeconfig
+temp
