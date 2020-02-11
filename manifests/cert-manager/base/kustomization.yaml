@@ -1,2 +1,3 @@
 resources:
   - helm-release.yaml
+  - cert-manager-crd.yaml
