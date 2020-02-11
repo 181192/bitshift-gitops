@@ -2,43 +2,43 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: linkerd
-  namespace: linkerd-system
+  namespace: linkerd
 spec:
   values:
     global:
       identityTrustAnchorsPEM: |
         -----BEGIN CERTIFICATE-----
-        MIIB1jCCAXugAwIBAgIQdOfNzh0sUOB64H0+oSAn3TAKBggqhkjOPQQDAjAwMS4w
-        LAYDVQQDEyVpZGVudGl0eS5saW5rZXJkLXN5c3RlbS5jbHVzdGVyLmxvY2FsMB4X
-        DTIwMDIxMTIwNDQ1NVoXDTMwMDIwODIwNDQ1NVowMDEuMCwGA1UEAxMlaWRlbnRp
-        dHkubGlua2VyZC1zeXN0ZW0uY2x1c3Rlci5sb2NhbDBZMBMGByqGSM49AgEGCCqG
-        SM49AwEHA0IABNoM63fi2Biuqs/wJpnQ7YKSzSnmaYWiEdZsIkEcf03In7s8VxCm
-        pyNiOx8nK+7Lhq82pvRuC5Rc/t0Vy0BXH12jdzB1MA4GA1UdDwEB/wQEAwIBBjAS
-        BgNVHRMBAf8ECDAGAQH/AgEBMB0GA1UdDgQWBBQsXvtqcYS/PVnlXLiMcKysX0Sh
-        AjAwBgNVHREEKTAngiVpZGVudGl0eS5saW5rZXJkLXN5c3RlbS5jbHVzdGVyLmxv
-        Y2FsMAoGCCqGSM49BAMCA0kAMEYCIQDiTMVXYigEk0y8oiGGRypcJlph+AxjaSHk
-        4W2pp/f+mgIhAN80mUznTGUNygxiEjTHuCmlubPCYwcy9eiiKYe3Vr00
+        MIIBwDCCAWagAwIBAgIQAWF/jGHmDyxNJkE2lCc9BDAKBggqhkjOPQQDAjApMScw
+        JQYDVQQDEx5pZGVudGl0eS5saW5rZXJkLmNsdXN0ZXIubG9jYWwwHhcNMjAwMjEx
+        MjE1OTQ5WhcNMzAwMjA4MjE1OTQ5WjApMScwJQYDVQQDEx5pZGVudGl0eS5saW5r
+        ZXJkLmNsdXN0ZXIubG9jYWwwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQkND2b
+        bMfmNXeXKZ3HvHJnmz/VE285xAH956ocWUJ2Z8xj1hsyoqT+3DQEsdQRzMTic47B
+        +4KfwdLQwaUMdnU4o3AwbjAOBgNVHQ8BAf8EBAMCAQYwEgYDVR0TAQH/BAgwBgEB
+        /wIBATAdBgNVHQ4EFgQUxp9CTMUxUDT3gNVJ8E3AlwbXuIgwKQYDVR0RBCIwIIIe
+        aWRlbnRpdHkubGlua2VyZC5jbHVzdGVyLmxvY2FsMAoGCCqGSM49BAMCA0gAMEUC
+        IQDxxyfnYfrJtVTIJnWRXpgIvvndUb43nzKHpzeZIYcX+AIgIecixVfWpgPiEp9U
+        9kaHfTbWAb6jmgs38FoY1YJ6dDk=
         -----END CERTIFICATE-----
     identity:
       issuer:
         tls:
           crtPEM: |
             -----BEGIN CERTIFICATE-----
-            MIIB1jCCAXygAwIBAgIRAMugDHSAdLnNi7N092pp0wUwCgYIKoZIzj0EAwIwMDEu
-            MCwGA1UEAxMlaWRlbnRpdHkubGlua2VyZC1zeXN0ZW0uY2x1c3Rlci5sb2NhbDAe
-            Fw0yMDAyMTEyMDQ1MTJaFw0yMTAyMTAyMDQ1MTJaMDAxLjAsBgNVBAMTJWlkZW50
-            aXR5LmxpbmtlcmQtc3lzdGVtLmNsdXN0ZXIubG9jYWwwWTATBgcqhkjOPQIBBggq
-            hkjOPQMBBwNCAARtvvlWhseZrS6VtD+wGNthcla4YMBAmCjxXxzzoo90Xfm+g6OA
-            kcc+lQGS1zxz3/R9icn1Rk7URCai5LJEBCUno3cwdTAOBgNVHQ8BAf8EBAMCAQYw
-            EgYDVR0TAQH/BAgwBgEB/wIBADAdBgNVHQ4EFgQUuVIf9ER7RGnhADnPmi5kLi1T
-            d6UwMAYDVR0RBCkwJ4IlaWRlbnRpdHkubGlua2VyZC1zeXN0ZW0uY2x1c3Rlci5s
-            b2NhbDAKBggqhkjOPQQDAgNIADBFAiEAqgg25Tt4hbvS5/G4J4eOK9hf+b8ik4yY
-            nNhYGj82XBACIHeMi7bAkXpnbDNjHQeCWVWPdpuPAyn+bcogjEGA8Hf3
+            MIIBwTCCAWegAwIBAgIRANNcaORYPRrzQ0bsiTj++jgwCgYIKoZIzj0EAwIwKTEn
+            MCUGA1UEAxMeaWRlbnRpdHkubGlua2VyZC5jbHVzdGVyLmxvY2FsMB4XDTIwMDIx
+            MTIxNTk1NFoXDTIxMDIxMDIxNTk1NFowKTEnMCUGA1UEAxMeaWRlbnRpdHkubGlu
+            a2VyZC5jbHVzdGVyLmxvY2FsMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEPKKu
+            ikCJfbjorxyuEZQ+6F10TM76Fsq1mOZrhlWUl4XOMdSnfoAvw+j/WbVqOP21nq0K
+            iC9JeQ7o1P7RY0kNDqNwMG4wDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYB
+            Af8CAQAwHQYDVR0OBBYEFOK1LhzdyT2usLXPn1+vvvtoMDuQMCkGA1UdEQQiMCCC
+            HmlkZW50aXR5LmxpbmtlcmQuY2x1c3Rlci5sb2NhbDAKBggqhkjOPQQDAgNIADBF
+            AiAoklEnPXI8EBNqR4IpyX3jPuRCFkItQXx02XabVYup+QIhAI5GmlyqjlJ7aWoS
+            u7k+eD2GZduSjSSTPabFKBD1MCLl
             -----END CERTIFICATE-----
           keyPEM: |
             -----BEGIN EC PRIVATE KEY-----
-            MHcCAQEEIBoSD+fHDwkBbqfqurrpjV0edBxg6zqBL7RurfFD3A6koAoGCCqGSM49
-            AwEHoUQDQgAEbb75VobHma0ulbQ/sBjbYXJWuGDAQJgo8V8c86KPdF35voOjgJHH
-            PpUBktc8c9/0fYnJ9UZO1EQmouSyRAQlJw==
+            MHcCAQEEINp2/wxlCO2kRJ8hn0kRMpho6SrZwdHhbD7rriw510BaoAoGCCqGSM49
+            AwEHoUQDQgAEPKKuikCJfbjorxyuEZQ+6F10TM76Fsq1mOZrhlWUl4XOMdSnfoAv
+            w+j/WbVqOP21nq0KiC9JeQ7o1P7RY0kNDg==
             -----END EC PRIVATE KEY-----
-        crtExpiry: "2021-02-10T21:46:58Z"
+        crtExpiry: "2021-02-10T23:01:16Z"
