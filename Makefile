@@ -7,5 +7,6 @@ install-flux-management:
 install-flux:
 	kubectl apply -f manifests-flux/namespace.yaml
 	kubectl apply -f manifests-common/flux-helm-release-crd.yaml
+	kubectl apply -f bitshift-gitops-k8s/plattform/addons.yaml
 	helm3 upgrade --namespace flux-system --install flux  manifests-flux/flux --values manifests-flux/bitshift-gitops-k8s-flux-values.yaml
 	helm3 upgrade --namespace flux-system --install helm-operator  manifests-flux/helm-operator --values manifests-flux/bitshift-gitops-k8s-helm-operator-values.yaml
