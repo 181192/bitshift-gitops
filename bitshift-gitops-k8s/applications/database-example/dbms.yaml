@@ -1,0 +1,16 @@
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceInstance
+metadata:
+  name: postgres-test
+  namespace: database-example
+spec:
+  clusterServiceClassExternalName: azure-postgresql-9-6-dbms
+  clusterServicePlanExternalName: basic
+  parameters:
+    location: westeurope
+    resourceGroup: bitshift-gitops-db-rg
+    alias: 91214b02-c2e9-4e7a-932b-5584fff6e7e4
+    firewallRules:
+    - startIPAddress: "0.0.0.0"
+      endIPAddress: "255.255.255.255"
+      name: "AllowAll"

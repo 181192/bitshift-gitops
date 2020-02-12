@@ -1,0 +1,9 @@
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceBinding
+metadata:
+  name: postgres-test-database-binding
+  namespace: database-example
+spec:
+  instanceRef:
+    name: postgres-test-database-instance
+  secretName: postgres-test-database-secret

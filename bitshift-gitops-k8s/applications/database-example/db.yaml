@@ -1,0 +1,10 @@
+apiVersion: servicecatalog.k8s.io/v1beta1
+kind: ServiceInstance
+metadata:
+  name: postgres-test-database-instance
+  namespace: database-example
+spec:
+  clusterServiceClassExternalName: azure-postgresql-9-6-database
+  clusterServicePlanExternalName: database
+  parameters:
+    parentAlias: 91214b02-c2e9-4e7a-932b-5584fff6e7e4
