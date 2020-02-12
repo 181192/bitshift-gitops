@@ -43,3 +43,28 @@ syncGarbageCollection:
 
 clusterRole:
   create: true
+
+sops:
+  enabled: true
+
+initContainers:
+  flux-init-keyvault:
+    image: sondregj/flux-init-keyvault:1.0.0
+    imagePullPolicy: Always
+    args:
+      - /etc/kubernetes/azure.json
+      - /shared/keyvault-creds.sh
+    volumeMounts:
+      - mountPath: /etc/kubernetes/azure.json
+        name: acr-credentials
+      - mountPath: /shared
+        name: shared-volume
+
+extraVolumes:
+  - name: shared-volume
+    emptyDir:
+      medium: Memory
+
+extraVolumeMounts:
+  - mountPath: /shared
+    name: shared-volume
