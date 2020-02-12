@@ -11,3 +11,5 @@ sshkey
 sshkey.pub
 kubeconfig
 temp
+
+.DS_Store
