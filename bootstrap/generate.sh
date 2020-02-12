@@ -120,10 +120,12 @@ echo "Generated ${CLUSTER_GENERATED_FILE}"
 
 # Generate controlplane resources.
 kustomize build "${SOURCE_DIR}/cluster/controlplane" | envsubst > "${CONTROLPLANE_GENERATED_FILE}"
+sops -i -e  --config ${OUTPUT_DIR}/../../clusters/.sops.yaml "${CONTROLPLANE_GENERATED_FILE}"
 echo "Generated ${CONTROLPLANE_GENERATED_FILE}"
 
 # Generate machinedeployment resources.
 kustomize build "${SOURCE_DIR}/cluster/machinedeployment" | envsubst > "${MACHINEDEPLOYMENT_GENERATED_FILE}"
+sops -i -e  --config ${OUTPUT_DIR}/../../clusters/.sops.yaml "${MACHINEDEPLOYMENT_GENERATED_FILE}"
 echo "Generated ${MACHINEDEPLOYMENT_GENERATED_FILE}"
 
 # Generate Cluster API provider components file.
@@ -140,6 +142,7 @@ echo "Generated ${COMPONENTS_AZURE_GENERATED_FILE}"
 
 # Generate a single provider components file.
 kustomize build "${SOURCE_DIR}/cluster/provider-components" | envsubst > "${PROVIDER_COMPONENTS_GENERATED_FILE}"
+sops -i -e  --config ${OUTPUT_DIR}/../../clusters/.sops.yaml "${PROVIDER_COMPONENTS_GENERATED_FILE}"
 echo "Generated ${PROVIDER_COMPONENTS_GENERATED_FILE}"
 echo "WARNING: ${PROVIDER_COMPONENTS_GENERATED_FILE} includes Azure credentials"
 
