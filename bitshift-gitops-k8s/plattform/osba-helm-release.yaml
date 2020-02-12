@@ -1,0 +1,37 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+    name: osba
+    namespace: service-catalog
+spec:
+    releaseName: osba
+    chart:
+        repository: https://kubernetescharts.blob.core.windows.net/azure
+        name: open-service-broker-azure
+        version: 1.8.4
+    values:
+        redis:
+            persistence:
+                enabled: true
+                storageClass: azurefile
+                accessMode: ReadWriteOnce
+                size: 8Gi
+        azure:
+            subscriptionId: ENC[AES256_GCM,data:Yp2b0BhGpuOItwLq1cTb9eF5QyUHvu+929isLXKDasGGEks+,iv:5l7RPNpLryQ01TFFX7H+da5St/odyE4teiQugQyOdDY=,tag:5C+kC9ByXWEkSOCQcMKiRA==,type:str]
+            tenantId: ENC[AES256_GCM,data:PD16/ySn2681yhflR5ciPgItc6OoMuU6hPmNn4JmzDRBbf65,iv:VsyhEtzP4IRHlS/ktPkHXVaYS7y+bUchllzNnGBTA+k=,tag:ItHt9hnnGZBp0TX0CC3Y1Q==,type:str]
+            clientId: ENC[AES256_GCM,data:0SCud13zb+Fuf20UDuzgcpWVt9B8vuW5EuJpD7C/pSEvlqsY,iv:EBwVYBR7MYDfV4TAnInNQNX74DIlkzzhBUIYYmbyugw=,tag:k97siAKFHMA4ImSdh5cSbA==,type:str]
+            clientSecret: ENC[AES256_GCM,data:eHpYSq5JZk2T894c9XV/6m+QNyQlirMOg4lw+rd0uXERfHYq,iv:JZb+38U67EM5f2rsZyp91P4DAvhS3K//u8HZN5Izy2U=,tag:zKlHJctlTYoLHX0vhfEY3A==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv:
+    -   vault_url: https://bitshift-gitops.vault.azure.net
+        name: sops-key
+        version: 544f2acd0fbf4ecabfc9f0525ace921a
+        created_at: '2020-02-12T11:47:33Z'
+        enc: pe_sD8MEe-kNgKB2Cv9Akz02A92wSoZnnAkq20F8n7DJXXiQtMAE4I4jkXtDPLewE-nHrrKcMdQuxm6f6KyrNtag_Rwpf7kJSyeTIjDrwnpgn5IHsIJUObVmcePh-7EcMaygXBW-XbGIr1dNWWG5upgM8OvqfZPHDrUtbqkpudmPydWxSmC74aYFwVH_X2F4F7tQl-jgBQd0PTpx7tdTZAGpkyCuJkmyJZEHC_c5fkx6Csp0VbWH3AifVCbTgIvNCj_waRWAyI9AqEoZt1gZAMxYORfavBSIcw2HumqNAYp03FqpWBOBZbbz1NXSPUcJ9lFTxlioJ4dWaXhPhqngbg
+    lastmodified: '2020-02-12T11:47:34Z'
+    mac: ENC[AES256_GCM,data:v+hNr0Ot5MLPmUtmRb4qGKnOX6MUSsl1p22L7ec/1VJGRo4PcqNv/bkc+/8PcmDZIRNRHtoZGXlGULxUSoll0XzTu/My1KD1qo//M8RV8a7FQPEwMHyEQlN7qEka6Lac8uHXHoRFtow2PDlBvs3jcH87rKivt0z0bC3VPrH51AE=,iv:ahio+f6dWnsgjfBUCvMtIDRkJti8nRmZn7AWh/5jRGU=,tag:tnEzEBt2wQ/j7q8LqtszZA==,type:str]
+    pgp: []
+    encrypted_regex: ^(azure)$
+    version: 3.5.0

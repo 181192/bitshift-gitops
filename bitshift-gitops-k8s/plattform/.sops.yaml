@@ -1,0 +1,4 @@
+creation_rules:
+  - path_regex: osba-helm-release.yaml
+    encrypted_regex: "^(azure)$"
+    azure_keyvault: "https://bitshift-gitops.vault.azure.net/keys/sops-key/544f2acd0fbf4ecabfc9f0525ace921a"

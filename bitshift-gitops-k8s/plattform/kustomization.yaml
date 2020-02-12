@@ -15,5 +15,4 @@ transformers:
   - flux-annotations.yaml
 
 patches:
-  - patch-osba.yaml
   - patch-linkerd.yaml
