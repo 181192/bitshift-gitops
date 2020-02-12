@@ -7,6 +7,26 @@ theme: gitops
 
 ---
 
+# About
+
+```yaml
+apiVersion: v1
+kind: Developer
+metadata:
+  name: Kristoffer-Andre Kalliainen
+  labels:
+    drinks: coffee
+spec:
+  linkedin: https://www.linkedin.com/in/kalliainen/
+  github: https://github.com/181192
+  companyRef:
+    apiVersion: v1
+    kind: Company
+    name: Stacc AS
+```
+
+---
+
 # What is GitOps?
 
 >A way of implementing Continuous Deployment for cloud native applications. It focuses on a developer-centric experience when operating infrastructure.
