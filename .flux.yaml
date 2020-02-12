@@ -1,6 +1,6 @@
 version: 1
 patchUpdated:
   generators:
-  - command: . /shared/keyvault-creds.sh && for i in **/*.enc.yaml; do echo '---'; sops -d $i; done;
+  - command: . /shared/keyvault-creds.sh && for i in **/*.yaml; do echo '---'; sops -d $i 2>/dev/null || true; done;
   - command: kustomize build .
   patchFile: flux-patch.yaml
