@@ -1,0 +1,56 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: podinfo
+  namespace: production
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.chart-image: semver:~3.0
+spec:
+  releaseName: frontend
+  chart:
+    repository: https://flagger.app
+    name: podinfo
+    version: "3.1.0"
+  values:
+    image:
+      repository: stefanprodan/podinfo
+      tag: 3.0.0
+
+    canary:
+      enabled: true
+      istioTLS: DISABLE
+
+      istioIngress:
+        enabled: false
+        # Istio ingress gateway name
+        gateway: public-gateway.istio-system.svc.cluster.local
+        # external host name eg. podinfo.example.com
+        host: ""
+
+      analysis:
+        # Schedule interval (default 60s)
+        interval: 15s
+        # Max number of failed metric checks before rollback
+        threshold: 10
+        # Max traffic percentage routed to canary
+        maxWeight: 50 # percent (0-100)
+        # canary increment step
+        stepWeight: 5 # percent (0-100)
+
+      thresholds:
+        # minimum request success rate (non 5xx responses)
+        successRate: 99 # percent (0-100)
+        # Maximum request duration P99
+        latency: 500 # milliseconds
+
+      loadtest:
+        enabled: true
+        url: http://load-tester.production/
+
+    backend: ""
+
+    faults:
+      delay: false
+      error: false
