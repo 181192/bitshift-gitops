@@ -1,0 +1,117 @@
+apiVersion: bootstrap.cluster.x-k8s.io/v1alpha2
+kind: KubeadmConfig
+metadata:
+    name: bitshift-gitops-k8s-controlplane-0
+    namespace: default
+spec:
+    clusterConfiguration:
+        apiServer:
+            extraArgs:
+                cloud-config: /etc/kubernetes/azure.json
+                cloud-provider: azure
+            extraVolumes:
+            -   hostPath: /etc/kubernetes/azure.json
+                mountPath: /etc/kubernetes/azure.json
+                name: cloud-config
+                readOnly: true
+            timeoutForControlPlane: 20m
+        controllerManager:
+            extraArgs:
+                allocate-node-cidrs: "false"
+                cloud-config: /etc/kubernetes/azure.json
+                cloud-provider: azure
+            extraVolumes:
+            -   hostPath: /etc/kubernetes/azure.json
+                mountPath: /etc/kubernetes/azure.json
+                name: cloud-config
+                readOnly: true
+    files:
+    -   content: ENC[AES256_GCM,data:30pXsNsKCmACOoj4t9IQNRmS2Hs4AIfZg2HRG1xdF2yZ6HeTMljNFvUyXAMymgjegZ0y3KzKePL9Ai+zcKUJ7awiEZowz4k7TToQLV7qagdd6oYNbdOIs8IKIAaEEEzpJ9ZFSRy7QksewvpCcaSAkobbENPLzgsVAsC2QYeWLMhC8d9PwQiVATFHy4hTdrdB7Lw70kiY/A4rmRsaSRDeJT+2PAVhqF4DleF6yuw0HyIe3iFQ5ZjGjuK9d2pDQqETS5COrjGDU+rm7oiM0b8mAHqZo/8Yi8tmnXsBYKynEVpECQt/CjunIy7fYcHwaSxuRPPfJzdPShfD1DIkzupthoxs1gCPyUaSVED9HGT8fywV3ANqU0WfBcmjwuwwLdgfCCARWFEFuNRbetU0KiSluIQbRMs9QVuCKVIbKLpQvDSn4gYULZLs9ezzPmmqN7JnHlNmkm0DA+otpmSZ0ZA044MPHFJlFOxbhNVWHLfjXkdexCUURRPGo6M0djbyFcbN+YrKXCW8qKE7yKmaVjhYUy4+NpwpKYSdnYwf91jg5Kpb2Ru6y4UJxhwoTZmW9AtGmB8O/7chxvZ9qQK5i4G6LstEv9W3P1USTKSNC76+kz03Vlz8Gs3WmSzznzHsyvtL2VzVKo/sd1xI8m7souijGc7PkOwFaqeT5pEFhKG5znky1VTJet4q8ndEqjED+jXCep/a3Lj1VgkFaMUMpANHHZffeSlwpxsxxxyyhGw4CoS4ilgrABSuKXPqXh8By8gHuhZX7TmXyyanmoGuk8R5bOQBZeM+cPYwcdZIq9qpNIyDxHqnXQ4okQ0LJWSHCoTf3SlTfUYoVqvbKovNgBIs7n61DadALPMpnI62w36aSxo67VXFmUYy8jRg7lLV6lkR/B5uaF9SuszkPLwaeUrnb/779kDSR0tfg+m3tC4ocoXyy5owqspATILmx/zobJEp6LyUNGH+Y+02VIx9cqWclKiatIQje0wWpJVcFVtVPfSzqvpfqXM19ibyzBWOi4PQp4DYdyJC1DozRbuc2LP3SqjUjIuOZbZfDrqJpO8hbx8RLhu8+eA=,iv:roSP6aeqv3NJmLqZS0d5YHAxy0x6lqk/6Wj1+J9jqXk=,tag:sqwwaS1QX08lDrfJzvkPwg==,type:str]
+        owner: root:root
+        path: /etc/kubernetes/azure.json
+        permissions: "0644"
+    initConfiguration:
+        nodeRegistration:
+            kubeletExtraArgs:
+                cloud-config: /etc/kubernetes/azure.json
+                cloud-provider: azure
+            name: '{{ ds.meta_data["local_hostname"] }}'
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv:
+    -   vault_url: https://bitshift-gitops.vault.azure.net
+        name: sops-key
+        version: 544f2acd0fbf4ecabfc9f0525ace921a
+        created_at: '2020-02-12T17:32:43Z'
+        enc: orgRYDGHr6esC_ru0Wah9_gGEkm7pBYIl8_HEUxGK-Rve8-ISgbH6UYyt3ZCGljQLNl_RpUSurIquh-4zZZEyzpZHNhR0opewxvrZ4U0L80JvzJc2I_10_T-mG1Q5QJHwdQCWIKqztsDGkm1cWtWqvCpjWnBv-PK1qjfzmO9rPx25McGff-OJPcsSG4F0_IfGv-FBr15SQKszSvsKnSiyEQwHnWgyyp2gmucuWRuMXOoKHDkMCTm1gxMyjPiY9wiMl3Z6Czw4YM39J7m-r5Ifl9VY50GMiw0aMPXcb8UaU-g5lqyqycdsmU6RH8YdSqloEHrBzB8NEpCfdQ1Ca164Q
+    lastmodified: '2020-02-12T17:32:44Z'
+    mac: ENC[AES256_GCM,data:DvPmCVwx5IVMaDoByZT5Zdmm4Au2Nk9buLALOLKhgdiKxwiQMvlqMmNLwGXm3uHOP8EcrmEPp0kFxDHDSHUxItOauAYm2wvqd5BplfkJoSLbZdcMwlqLYLhU+gqchvNVat4QqmotPwcMAzEs5EqoQY4PTZnCMyZGYYMyJIIL+Nc=,iv:06SwBmt+NF6FcUjDaXrKYTa9zMgeFPGl5qroHtxfhc8=,tag:ohNUcUQnxo+zWnZlUFmOKg==,type:str]
+    pgp: []
+    encrypted_regex: ^(content)$
+    version: 3.5.0
+---
+apiVersion: cluster.x-k8s.io/v1alpha2
+kind: Machine
+metadata:
+    labels:
+        cluster.x-k8s.io/cluster-name: bitshift-gitops-k8s
+        cluster.x-k8s.io/control-plane: "true"
+    name: bitshift-gitops-k8s-controlplane-0
+    namespace: default
+spec:
+    bootstrap:
+        configRef:
+            apiVersion: bootstrap.cluster.x-k8s.io/v1alpha2
+            kind: KubeadmConfig
+            name: bitshift-gitops-k8s-controlplane-0
+            namespace: default
+    infrastructureRef:
+        apiVersion: infrastructure.cluster.x-k8s.io/v1alpha2
+        kind: AzureMachine
+        name: bitshift-gitops-k8s-controlplane-0
+        namespace: default
+    version: v1.15.7
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv:
+    -   vault_url: https://bitshift-gitops.vault.azure.net
+        name: sops-key
+        version: 544f2acd0fbf4ecabfc9f0525ace921a
+        created_at: '2020-02-12T17:32:43Z'
+        enc: orgRYDGHr6esC_ru0Wah9_gGEkm7pBYIl8_HEUxGK-Rve8-ISgbH6UYyt3ZCGljQLNl_RpUSurIquh-4zZZEyzpZHNhR0opewxvrZ4U0L80JvzJc2I_10_T-mG1Q5QJHwdQCWIKqztsDGkm1cWtWqvCpjWnBv-PK1qjfzmO9rPx25McGff-OJPcsSG4F0_IfGv-FBr15SQKszSvsKnSiyEQwHnWgyyp2gmucuWRuMXOoKHDkMCTm1gxMyjPiY9wiMl3Z6Czw4YM39J7m-r5Ifl9VY50GMiw0aMPXcb8UaU-g5lqyqycdsmU6RH8YdSqloEHrBzB8NEpCfdQ1Ca164Q
+    lastmodified: '2020-02-12T17:32:44Z'
+    mac: ENC[AES256_GCM,data:DvPmCVwx5IVMaDoByZT5Zdmm4Au2Nk9buLALOLKhgdiKxwiQMvlqMmNLwGXm3uHOP8EcrmEPp0kFxDHDSHUxItOauAYm2wvqd5BplfkJoSLbZdcMwlqLYLhU+gqchvNVat4QqmotPwcMAzEs5EqoQY4PTZnCMyZGYYMyJIIL+Nc=,iv:06SwBmt+NF6FcUjDaXrKYTa9zMgeFPGl5qroHtxfhc8=,tag:ohNUcUQnxo+zWnZlUFmOKg==,type:str]
+    pgp: []
+    encrypted_regex: ^(content)$
+    version: 3.5.0
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha2
+kind: AzureMachine
+metadata:
+    name: bitshift-gitops-k8s-controlplane-0
+    namespace: default
+spec:
+    location: westeurope
+    osDisk:
+        diskSizeGB: 30
+        managedDisk:
+            storageAccountType: Premium_LRS
+        osType: Linux
+    sshPublicKey: c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFDN3FUT2JQd21Ec2ZUZzZmazF0cTVSWDhPc1c0Yi9iUUdiVll0eUlXNjRpNktmK2ZzS3dGeGl1MDhHM3EzSkZQbDNXMTBxZmRsZlovcnBCdDUzM1ZQelpCclUzSk9VTU1RSlV5OTFhZmF2NTdrTW1yNDR6dGJQVGZQK04rNGFxTVJiV2VscEN0TUpNWFFnNjlBRGsybWRLS0RDUnBzQytuelh1SWRQVlQvVGppN2djdldwdUdVZjlEKzF4eUhud2ZVUnltaDJhZ1dncmFrWERQUWtCbDVwMHdJNjBVUXIzanB6eTVNTFRRTEordFF3TlRFMGdLWFdxRGNXckVPVFpzMUFCbEIyK0I5Mmk3cENBWitRWnZjalJrVWxYR1lhTXNkdWltcnJwd2Z0M0ZpMG5qbktRQ1FpSnlLZStwVzVYYStCUnVjaHlielRJVThRKzk2dHUyckQga0BrYWxsaQo=
+    vmSize: Standard_B2ms
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv:
+    -   vault_url: https://bitshift-gitops.vault.azure.net
+        name: sops-key
+        version: 544f2acd0fbf4ecabfc9f0525ace921a
+        created_at: '2020-02-12T17:32:43Z'
+        enc: orgRYDGHr6esC_ru0Wah9_gGEkm7pBYIl8_HEUxGK-Rve8-ISgbH6UYyt3ZCGljQLNl_RpUSurIquh-4zZZEyzpZHNhR0opewxvrZ4U0L80JvzJc2I_10_T-mG1Q5QJHwdQCWIKqztsDGkm1cWtWqvCpjWnBv-PK1qjfzmO9rPx25McGff-OJPcsSG4F0_IfGv-FBr15SQKszSvsKnSiyEQwHnWgyyp2gmucuWRuMXOoKHDkMCTm1gxMyjPiY9wiMl3Z6Czw4YM39J7m-r5Ifl9VY50GMiw0aMPXcb8UaU-g5lqyqycdsmU6RH8YdSqloEHrBzB8NEpCfdQ1Ca164Q
+    lastmodified: '2020-02-12T17:32:44Z'
+    mac: ENC[AES256_GCM,data:DvPmCVwx5IVMaDoByZT5Zdmm4Au2Nk9buLALOLKhgdiKxwiQMvlqMmNLwGXm3uHOP8EcrmEPp0kFxDHDSHUxItOauAYm2wvqd5BplfkJoSLbZdcMwlqLYLhU+gqchvNVat4QqmotPwcMAzEs5EqoQY4PTZnCMyZGYYMyJIIL+Nc=,iv:06SwBmt+NF6FcUjDaXrKYTa9zMgeFPGl5qroHtxfhc8=,tag:ohNUcUQnxo+zWnZlUFmOKg==,type:str]
+    pgp: []
+    encrypted_regex: ^(content)$
+    version: 3.5.0

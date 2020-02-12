@@ -1,0 +1,111 @@
+apiVersion: bootstrap.cluster.x-k8s.io/v1alpha2
+kind: KubeadmConfigTemplate
+metadata:
+    name: bitshift-gitops-k8s-md-0
+    namespace: default
+spec:
+    template:
+        spec:
+            files:
+            -   content: ENC[AES256_GCM,data:kX+CQZsYQhhMkfBF7t8EbYCvO4mEdwB6PMzJmaHgHhC+zoTIMcluj/YC4BmYJkCBtNjC7Ldq8MB7XHG0XJqYa5m+50IOjSCLkhK4smJMDbPj7unPccISvDuk1KHmYSeyqNBdw1GA2VH6zffLnakBUmGe5MCutroHxL0hrDuEPjdtlAVKe+2XdG4cttTecxmm9ZUj+dru0ouzxQRU6dYhmDxdlvcxUattPksAVSAy09vfE6XV2hgc3FHSjKsKKGJeW/3cleDRIqg35gl1JwC81DY03mWFBLHe+IqR3ye5lrPM9RICbum0whn5+4V5txt8ztxbqMl9llDQqRFCkiM8h8iNOH+Q+2fhuNJZmQBU9jNDu2LS93LFSifPSjjfJCDfvNZ4Ize6LV9PojWiCp+W4IWBfSLdHpjzuwZ2vFq+wxvkPJa4QC2zjlNcwa8S6wEMT2regtpcDXEgBpxHa4bH1g35pxs7AXNHj+d11s4/UBZcmUjdDQHMmyiJM3WVyTnD0wHTbGnKckHcd7fUC+at70Q+JHKkmNKMZXLCMnADu/d8MHiN0DIvwLqZlZ+Wc4Ei5knik6zZtxLYJfhfjaauYykhZ+uXFZccOipNCJsh7oApBNkh+uQWQKRAHweYTuqAzgi1NDdLlntTz9Jd57ApjQsSP5jF74zXDqq8TA81oIB4gtcCqtSd2Um+BKrx57APMU0XZg1ngrhB5IBJV6LYZ9xr9xu3tmjQoa0XYPXk1S5uuPZQaQHrd+YL53xFQQFv7kdFURerEE/girqo+OIELUIYv5D6i1fV541pl+S/4vPw/bng8ZScc857Mf6ZgBDv5a8xRhdCfw89aCeY56V/+6pElKSGEGfKrGYqQxqDT/xmKduaVx5nbE1IO0RSk5f676WFVndP5NGkbsdsDyy9zM9QmqzlBccym6sTfdK8eB7Va09hxWuYhRWPH1g88YH/bRR1HrtzwxQrWoZURUqgRBiqMZvsaLBXUbhLLS1YmA==,iv:ocZbVgLBtoqxIM+FMdGLJPKpBP2JtFu0h1NTSdvIw4M=,tag:qjqYRuWSeE5aQ8KnZSg5lw==,type:str]
+                owner: root:root
+                path: /etc/kubernetes/azure.json
+                permissions: "0644"
+            joinConfiguration:
+                nodeRegistration:
+                    kubeletExtraArgs:
+                        cloud-config: /etc/kubernetes/azure.json
+                        cloud-provider: azure
+                    name: '{{ ds.meta_data["local_hostname"] }}'
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv:
+    -   vault_url: https://bitshift-gitops.vault.azure.net
+        name: sops-key
+        version: 544f2acd0fbf4ecabfc9f0525ace921a
+        created_at: '2020-02-12T17:32:44Z'
+        enc: Fh4VGlKoaqTtbX8F3uFzmpoLJkTNziMaw1uY-c5HNRbvU9JJTo8pmaW5XXrOMa5llf1t3M-5e_8YlntqBS0CME3SoOCBy3WMzcQD1jvy-ffC4lqIAwTJ5iKXju5SfBoTulBQ65MSpNunZVOfbDgvwoaoSU38rFlfu5EN5JIJ8KAPPiyosb77IcDAtuLafYCGjuckfMrn7rH9buTP_oAEVjydYYWda8dH0nAmZvVCvuIzO6p5RULBwNl3KPzY8DauSgkjiss-KMDpbMjemU1pDZTRJ-lw1dNjqNpqBV5TzJxnX6AIKDn5wPWJKyRXaKl7fFHvk0Spi2Rae1FAkr-zKQ
+    lastmodified: '2020-02-12T17:32:45Z'
+    mac: ENC[AES256_GCM,data:WF4QN1okeZKUDfhIDE7QZ1PN0e4GO+p4zgQO2h/AgQ4KdvslVt6X1I47W5c+OcU2Dsjcl8l5y/98PNPiW4vJ0fMm0j3JYrZosLCdttBwPzGhQbbCiTd0omR2xL9H5DIDGyAmOBOLgp7UEbpmPPKpf43WK/N15Ev32j4Ln6opyWw=,iv:qdc8uO99rZkMn0a47hmhLMVTKIXYNoT0O9QPz/B8P7I=,tag:Xnh3CNStcYVAD8SXV3ikjA==,type:str]
+    pgp: []
+    encrypted_regex: ^(content)$
+    version: 3.5.0
+---
+apiVersion: cluster.x-k8s.io/v1alpha2
+kind: MachineDeployment
+metadata:
+    labels:
+        cluster.x-k8s.io/cluster-name: bitshift-gitops-k8s
+        nodepool: nodepool-0
+    name: bitshift-gitops-k8s-md-0
+    namespace: default
+spec:
+    replicas: 2
+    selector:
+        matchLabels:
+            cluster.x-k8s.io/cluster-name: bitshift-gitops-k8s
+            nodepool: nodepool-0
+    template:
+        metadata:
+            labels:
+                cluster.x-k8s.io/cluster-name: bitshift-gitops-k8s
+                nodepool: nodepool-0
+        spec:
+            bootstrap:
+                configRef:
+                    apiVersion: bootstrap.cluster.x-k8s.io/v1alpha2
+                    kind: KubeadmConfigTemplate
+                    name: bitshift-gitops-k8s-md-0
+                    namespace: default
+            infrastructureRef:
+                apiVersion: infrastructure.cluster.x-k8s.io/v1alpha2
+                kind: AzureMachineTemplate
+                name: bitshift-gitops-k8s-md-0
+                namespace: default
+            version: v1.15.7
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv:
+    -   vault_url: https://bitshift-gitops.vault.azure.net
+        name: sops-key
+        version: 544f2acd0fbf4ecabfc9f0525ace921a
+        created_at: '2020-02-12T17:32:44Z'
+        enc: Fh4VGlKoaqTtbX8F3uFzmpoLJkTNziMaw1uY-c5HNRbvU9JJTo8pmaW5XXrOMa5llf1t3M-5e_8YlntqBS0CME3SoOCBy3WMzcQD1jvy-ffC4lqIAwTJ5iKXju5SfBoTulBQ65MSpNunZVOfbDgvwoaoSU38rFlfu5EN5JIJ8KAPPiyosb77IcDAtuLafYCGjuckfMrn7rH9buTP_oAEVjydYYWda8dH0nAmZvVCvuIzO6p5RULBwNl3KPzY8DauSgkjiss-KMDpbMjemU1pDZTRJ-lw1dNjqNpqBV5TzJxnX6AIKDn5wPWJKyRXaKl7fFHvk0Spi2Rae1FAkr-zKQ
+    lastmodified: '2020-02-12T17:32:45Z'
+    mac: ENC[AES256_GCM,data:WF4QN1okeZKUDfhIDE7QZ1PN0e4GO+p4zgQO2h/AgQ4KdvslVt6X1I47W5c+OcU2Dsjcl8l5y/98PNPiW4vJ0fMm0j3JYrZosLCdttBwPzGhQbbCiTd0omR2xL9H5DIDGyAmOBOLgp7UEbpmPPKpf43WK/N15Ev32j4Ln6opyWw=,iv:qdc8uO99rZkMn0a47hmhLMVTKIXYNoT0O9QPz/B8P7I=,tag:Xnh3CNStcYVAD8SXV3ikjA==,type:str]
+    pgp: []
+    encrypted_regex: ^(content)$
+    version: 3.5.0
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha2
+kind: AzureMachineTemplate
+metadata:
+    name: bitshift-gitops-k8s-md-0
+    namespace: default
+spec:
+    template:
+        spec:
+            location: westeurope
+            osDisk:
+                diskSizeGB: 30
+                managedDisk:
+                    storageAccountType: Premium_LRS
+                osType: Linux
+            sshPublicKey: c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFDN3FUT2JQd21Ec2ZUZzZmazF0cTVSWDhPc1c0Yi9iUUdiVll0eUlXNjRpNktmK2ZzS3dGeGl1MDhHM3EzSkZQbDNXMTBxZmRsZlovcnBCdDUzM1ZQelpCclUzSk9VTU1RSlV5OTFhZmF2NTdrTW1yNDR6dGJQVGZQK04rNGFxTVJiV2VscEN0TUpNWFFnNjlBRGsybWRLS0RDUnBzQytuelh1SWRQVlQvVGppN2djdldwdUdVZjlEKzF4eUhud2ZVUnltaDJhZ1dncmFrWERQUWtCbDVwMHdJNjBVUXIzanB6eTVNTFRRTEordFF3TlRFMGdLWFdxRGNXckVPVFpzMUFCbEIyK0I5Mmk3cENBWitRWnZjalJrVWxYR1lhTXNkdWltcnJwd2Z0M0ZpMG5qbktRQ1FpSnlLZStwVzVYYStCUnVjaHlielRJVThRKzk2dHUyckQga0BrYWxsaQo=
+            vmSize: Standard_B2ms
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv:
+    -   vault_url: https://bitshift-gitops.vault.azure.net
+        name: sops-key
+        version: 544f2acd0fbf4ecabfc9f0525ace921a
+        created_at: '2020-02-12T17:32:44Z'
+        enc: Fh4VGlKoaqTtbX8F3uFzmpoLJkTNziMaw1uY-c5HNRbvU9JJTo8pmaW5XXrOMa5llf1t3M-5e_8YlntqBS0CME3SoOCBy3WMzcQD1jvy-ffC4lqIAwTJ5iKXju5SfBoTulBQ65MSpNunZVOfbDgvwoaoSU38rFlfu5EN5JIJ8KAPPiyosb77IcDAtuLafYCGjuckfMrn7rH9buTP_oAEVjydYYWda8dH0nAmZvVCvuIzO6p5RULBwNl3KPzY8DauSgkjiss-KMDpbMjemU1pDZTRJ-lw1dNjqNpqBV5TzJxnX6AIKDn5wPWJKyRXaKl7fFHvk0Spi2Rae1FAkr-zKQ
+    lastmodified: '2020-02-12T17:32:45Z'
+    mac: ENC[AES256_GCM,data:WF4QN1okeZKUDfhIDE7QZ1PN0e4GO+p4zgQO2h/AgQ4KdvslVt6X1I47W5c+OcU2Dsjcl8l5y/98PNPiW4vJ0fMm0j3JYrZosLCdttBwPzGhQbbCiTd0omR2xL9H5DIDGyAmOBOLgp7UEbpmPPKpf43WK/N15Ev32j4Ln6opyWw=,iv:qdc8uO99rZkMn0a47hmhLMVTKIXYNoT0O9QPz/B8P7I=,tag:Xnh3CNStcYVAD8SXV3ikjA==,type:str]
+    pgp: []
+    encrypted_regex: ^(content)$
+    version: 3.5.0
