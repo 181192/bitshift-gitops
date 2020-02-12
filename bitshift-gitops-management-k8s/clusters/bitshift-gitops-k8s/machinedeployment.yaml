@@ -26,8 +26,8 @@ sops:
         version: 544f2acd0fbf4ecabfc9f0525ace921a
         created_at: '2020-02-12T17:32:44Z'
         enc: Fh4VGlKoaqTtbX8F3uFzmpoLJkTNziMaw1uY-c5HNRbvU9JJTo8pmaW5XXrOMa5llf1t3M-5e_8YlntqBS0CME3SoOCBy3WMzcQD1jvy-ffC4lqIAwTJ5iKXju5SfBoTulBQ65MSpNunZVOfbDgvwoaoSU38rFlfu5EN5JIJ8KAPPiyosb77IcDAtuLafYCGjuckfMrn7rH9buTP_oAEVjydYYWda8dH0nAmZvVCvuIzO6p5RULBwNl3KPzY8DauSgkjiss-KMDpbMjemU1pDZTRJ-lw1dNjqNpqBV5TzJxnX6AIKDn5wPWJKyRXaKl7fFHvk0Spi2Rae1FAkr-zKQ
-    lastmodified: '2020-02-12T17:32:45Z'
-    mac: ENC[AES256_GCM,data:WF4QN1okeZKUDfhIDE7QZ1PN0e4GO+p4zgQO2h/AgQ4KdvslVt6X1I47W5c+OcU2Dsjcl8l5y/98PNPiW4vJ0fMm0j3JYrZosLCdttBwPzGhQbbCiTd0omR2xL9H5DIDGyAmOBOLgp7UEbpmPPKpf43WK/N15Ev32j4Ln6opyWw=,iv:qdc8uO99rZkMn0a47hmhLMVTKIXYNoT0O9QPz/B8P7I=,tag:Xnh3CNStcYVAD8SXV3ikjA==,type:str]
+    lastmodified: '2020-02-12T17:54:55Z'
+    mac: ENC[AES256_GCM,data:2L2JDuwlLD2Pbp2x9FGlSjXCXoiayp4MnADMyaBNd5OKmFgJXAS+JwqtKobUJS+NtR251yak/mI9vWN3GbU7apURuxu2o5S5gxAp/he1Xf33xyLg4saBtzXeI6fh6iXvODXxxtbu8vX69WHVOnAkG6LxnsC/8o44F0Wnh0xLmCs=,iv:lYMe45+b6ANvwD8XEuzH76qlEilzL2O8D9TdlCCv+c4=,tag:AEdskewGga8DBczFTMgFhg==,type:str]
     pgp: []
     encrypted_regex: ^(content)$
     version: 3.5.0
@@ -41,7 +41,7 @@ metadata:
     name: bitshift-gitops-k8s-md-0
     namespace: default
 spec:
-    replicas: 2
+    replicas: 3
     selector:
         matchLabels:
             cluster.x-k8s.io/cluster-name: bitshift-gitops-k8s
@@ -73,8 +73,8 @@ sops:
         version: 544f2acd0fbf4ecabfc9f0525ace921a
         created_at: '2020-02-12T17:32:44Z'
         enc: Fh4VGlKoaqTtbX8F3uFzmpoLJkTNziMaw1uY-c5HNRbvU9JJTo8pmaW5XXrOMa5llf1t3M-5e_8YlntqBS0CME3SoOCBy3WMzcQD1jvy-ffC4lqIAwTJ5iKXju5SfBoTulBQ65MSpNunZVOfbDgvwoaoSU38rFlfu5EN5JIJ8KAPPiyosb77IcDAtuLafYCGjuckfMrn7rH9buTP_oAEVjydYYWda8dH0nAmZvVCvuIzO6p5RULBwNl3KPzY8DauSgkjiss-KMDpbMjemU1pDZTRJ-lw1dNjqNpqBV5TzJxnX6AIKDn5wPWJKyRXaKl7fFHvk0Spi2Rae1FAkr-zKQ
-    lastmodified: '2020-02-12T17:32:45Z'
-    mac: ENC[AES256_GCM,data:WF4QN1okeZKUDfhIDE7QZ1PN0e4GO+p4zgQO2h/AgQ4KdvslVt6X1I47W5c+OcU2Dsjcl8l5y/98PNPiW4vJ0fMm0j3JYrZosLCdttBwPzGhQbbCiTd0omR2xL9H5DIDGyAmOBOLgp7UEbpmPPKpf43WK/N15Ev32j4Ln6opyWw=,iv:qdc8uO99rZkMn0a47hmhLMVTKIXYNoT0O9QPz/B8P7I=,tag:Xnh3CNStcYVAD8SXV3ikjA==,type:str]
+    lastmodified: '2020-02-12T17:54:55Z'
+    mac: ENC[AES256_GCM,data:2L2JDuwlLD2Pbp2x9FGlSjXCXoiayp4MnADMyaBNd5OKmFgJXAS+JwqtKobUJS+NtR251yak/mI9vWN3GbU7apURuxu2o5S5gxAp/he1Xf33xyLg4saBtzXeI6fh6iXvODXxxtbu8vX69WHVOnAkG6LxnsC/8o44F0Wnh0xLmCs=,iv:lYMe45+b6ANvwD8XEuzH76qlEilzL2O8D9TdlCCv+c4=,tag:AEdskewGga8DBczFTMgFhg==,type:str]
     pgp: []
     encrypted_regex: ^(content)$
     version: 3.5.0
@@ -104,8 +104,8 @@ sops:
         version: 544f2acd0fbf4ecabfc9f0525ace921a
         created_at: '2020-02-12T17:32:44Z'
         enc: Fh4VGlKoaqTtbX8F3uFzmpoLJkTNziMaw1uY-c5HNRbvU9JJTo8pmaW5XXrOMa5llf1t3M-5e_8YlntqBS0CME3SoOCBy3WMzcQD1jvy-ffC4lqIAwTJ5iKXju5SfBoTulBQ65MSpNunZVOfbDgvwoaoSU38rFlfu5EN5JIJ8KAPPiyosb77IcDAtuLafYCGjuckfMrn7rH9buTP_oAEVjydYYWda8dH0nAmZvVCvuIzO6p5RULBwNl3KPzY8DauSgkjiss-KMDpbMjemU1pDZTRJ-lw1dNjqNpqBV5TzJxnX6AIKDn5wPWJKyRXaKl7fFHvk0Spi2Rae1FAkr-zKQ
-    lastmodified: '2020-02-12T17:32:45Z'
-    mac: ENC[AES256_GCM,data:WF4QN1okeZKUDfhIDE7QZ1PN0e4GO+p4zgQO2h/AgQ4KdvslVt6X1I47W5c+OcU2Dsjcl8l5y/98PNPiW4vJ0fMm0j3JYrZosLCdttBwPzGhQbbCiTd0omR2xL9H5DIDGyAmOBOLgp7UEbpmPPKpf43WK/N15Ev32j4Ln6opyWw=,iv:qdc8uO99rZkMn0a47hmhLMVTKIXYNoT0O9QPz/B8P7I=,tag:Xnh3CNStcYVAD8SXV3ikjA==,type:str]
+    lastmodified: '2020-02-12T17:54:55Z'
+    mac: ENC[AES256_GCM,data:2L2JDuwlLD2Pbp2x9FGlSjXCXoiayp4MnADMyaBNd5OKmFgJXAS+JwqtKobUJS+NtR251yak/mI9vWN3GbU7apURuxu2o5S5gxAp/he1Xf33xyLg4saBtzXeI6fh6iXvODXxxtbu8vX69WHVOnAkG6LxnsC/8o44F0Wnh0xLmCs=,iv:lYMe45+b6ANvwD8XEuzH76qlEilzL2O8D9TdlCCv+c4=,tag:AEdskewGga8DBczFTMgFhg==,type:str]
     pgp: []
     encrypted_regex: ^(content)$
     version: 3.5.0
