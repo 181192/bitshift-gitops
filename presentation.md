@@ -212,6 +212,12 @@ spec:
 
 ---
 
+# Cluster API - Design
+
+![cluster-api-azure-design](./images/cluster-api-azure-design.jpg)
+
+---
+
 # Cluster API - Define a AKS cluster
 
 ```yaml
