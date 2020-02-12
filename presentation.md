@@ -465,3 +465,19 @@ spec:
               "useInstanceMetadata": true
             }
 ```
+
+---
+
+# Service Catalog
+
+> Service Catalog is an extension API that enables applications running in Kubernetes clusters to easily use external managed software offerings, such as a datastore service offered by a cloud provider.
+
+---
+
+# Service Catalog - Architecture
+
+![service-catalog-architecture](./images/service-catalog-architecture.svg)
+
+---
+
+# Demo time!
