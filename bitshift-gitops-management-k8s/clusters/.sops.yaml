@@ -1,0 +1,10 @@
+creation_rules:
+  - path_regex: provider-components.yaml
+    encrypted_regex: "^(data)$"
+    azure_keyvault: "https://bitshift-gitops.vault.azure.net/keys/sops-key/544f2acd0fbf4ecabfc9f0525ace921a"
+  - path_regex: controlplane.yaml
+    encrypted_regex: "^(content)$"
+    azure_keyvault: "https://bitshift-gitops.vault.azure.net/keys/sops-key/544f2acd0fbf4ecabfc9f0525ace921a"
+  - path_regex: machinedeployment.yaml
+    encrypted_regex: "^(content)$"
+    azure_keyvault: "https://bitshift-gitops.vault.azure.net/keys/sops-key/544f2acd0fbf4ecabfc9f0525ace921a"
