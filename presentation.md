@@ -158,6 +158,12 @@ Flagger can verify release according to business metrics. Start exposing to X% o
 
 ---
 
+# Flagger Canary Steps
+
+![flagger-canary-steps](./images/flagger-canary-steps.png)
+
+---
+
 # Canary releases
 
 ```yaml
